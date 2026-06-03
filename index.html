@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MY Portfolio | Yash Prashant Polke</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --bg2: #0f1525;
+    --card: #141929;
+    --border: #1e2d4a;
+    --accent: #00d4ff;
+    --accent2: #7b61ff;
+    --green: #00e676;
+    --red: #ff5252;
+    --yellow: #ffd740;
+    --text: #e8eaf6;
+    --muted: #8892b0;
+    --mono: 'Space Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── Grid background ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 2.5rem;
+    background: rgba(10,14,26,.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: .95rem;
+    color: var(--accent);
+    letter-spacing: .05em;
+  }
+  .nav-logo span { color: var(--muted); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: .85rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-family: var(--mono);
+    letter-spacing: .04em;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 8rem 2.5rem 4rem;
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .hero-inner { max-width: 700px; }
+  .hero-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: .78rem;
+    color: var(--accent);
+    background: rgba(0,212,255,.08);
+    border: 1px solid rgba(0,212,255,.2);
+    padding: .35rem .8rem;
+    border-radius: 2px;
+    letter-spacing: .1em;
+    margin-bottom: 1.5rem;
+    animation: fadeUp .6s ease both;
+  }
+  .hero h1 {
+    font-family: var(--mono);
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    animation: fadeUp .6s .1s ease both;
+  }
+  .hero h1 .highlight { color: var(--accent); }
+  .hero h1 .dim { color: var(--muted); font-weight: 400; }
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+    animation: fadeUp .6s .2s ease both;
+  }
+  .hero-sub strong { color: var(--text); }
+  .hero-btns {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    animation: fadeUp .6s .3s ease both;
+  }
+  .btn {
+    font-family: var(--mono);
+    font-size: .82rem;
+    letter-spacing: .06em;
+    padding: .75rem 1.6rem;
+    border-radius: 3px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all .2s;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0e1a;
+    font-weight: 700;
+  }
+  .btn-primary:hover { background: #33ddff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,212,255,.25); }
+  .btn-outline {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid rgba(0,212,255,.4);
+  }
+  .btn-outline:hover { background: rgba(0,212,255,.08); transform: translateY(-2px); }
+
+  /* Status indicator */
+  .status-badge {
+    display: inline-flex; align-items: center; gap: .5rem;
+    font-family: var(--mono); font-size: .75rem;
+    color: var(--green);
+    margin-bottom: 1rem;
+    animation: fadeUp .6s .05s ease both;
+  }
+  .status-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 0 3px rgba(0,230,118,.2);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 0 3px rgba(0,230,118,.2); }
+    50%      { box-shadow: 0 0 0 6px rgba(0,230,118,.05); }
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    position: relative; z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 5rem 2.5rem;
+  }
+  .section-label {
+    font-family: var(--mono);
+    font-size: .75rem;
+    color: var(--accent);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    margin-bottom: .6rem;
+  }
+  .section-title {
+    font-family: var(--mono);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: .75rem;
+    color: var(--text);
+  }
+  .section-desc {
+    color: var(--muted);
+    max-width: 560px;
+    margin-bottom: 3rem;
+    font-size: .95rem;
+  }
+  .divider {
+    width: 100%; height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+    margin: 0 auto;
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .skill-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.2rem 1.4rem;
+    transition: all .25s;
+    cursor: default;
+  }
+  .skill-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,212,255,.08);
+  }
+  .skill-icon { font-size: 1.4rem; margin-bottom: .5rem; }
+  .skill-name {
+    font-family: var(--mono);
+    font-size: .82rem;
+    color: var(--text);
+    margin-bottom: .3rem;
+  }
+  .skill-level {
+    font-size: .75rem;
+    color: var(--muted);
+  }
+  .skill-bar {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    margin-top: .6rem;
+    overflow: hidden;
+  }
+  .skill-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 2px;
+    transition: width 1s ease;
+  }
+
+  /* ── PROJECTS ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.8rem;
+    transition: all .25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .3s;
+  }
+  .project-card:hover { border-color: rgba(0,212,255,.3); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.4); }
+  .project-card:hover::before { transform: scaleX(1); }
+  .project-type {
+    font-family: var(--mono);
+    font-size: .7rem;
+    color: var(--accent);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: .75rem;
+  }
+  .project-title {
+    font-family: var(--mono);
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: .6rem;
+  }
+  .project-desc {
+    font-size: .88rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 1.2rem;
+  }
+  .project-tags {
+    display: flex; flex-wrap: wrap; gap: .4rem;
+    margin-bottom: 1.2rem;
+  }
+  .tag {
+    font-family: var(--mono);
+    font-size: .7rem;
+    padding: .25rem .6rem;
+    border-radius: 2px;
+    background: rgba(123,97,255,.12);
+    color: var(--accent2);
+    border: 1px solid rgba(123,97,255,.2);
+  }
+  .project-links { display: flex; gap: .75rem; }
+  .project-link {
+    font-family: var(--mono);
+    font-size: .75rem;
+    color: var(--accent);
+    text-decoration: none;
+    display: flex; align-items: center; gap: .3rem;
+    transition: opacity .2s;
+  }
+  .project-link:hover { opacity: .7; }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  @media (max-width: 700px) { .about-grid { grid-template-columns: 1fr; } }
+  .about-text p { color: var(--muted); font-size: .95rem; margin-bottom: 1rem; }
+  .about-text strong { color: var(--text); }
+  .edu-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.4rem;
+    margin-bottom: 1rem;
+    border-left: 3px solid var(--accent);
+  }
+  .edu-degree {
+    font-family: var(--mono);
+    font-size: .85rem;
+    color: var(--text);
+    margin-bottom: .25rem;
+  }
+  .edu-school { font-size: .82rem; color: var(--muted); }
+  .edu-year {
+    font-family: var(--mono);
+    font-size: .75rem;
+    color: var(--accent);
+    margin-top: .3rem;
+  }
+
+  /* ── CONTACT ── */
+  .contact-inner {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-inner::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,212,255,.08), transparent 70%);
+  }
+  .contact-inner h3 {
+    font-family: var(--mono);
+    font-size: 1.4rem;
+    margin-bottom: .75rem;
+  }
+  .contact-inner p { color: var(--muted); margin-bottom: 2rem; font-size: .95rem; }
+  .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  .contact-link {
+    display: flex; align-items: center; gap: .5rem;
+    font-family: var(--mono);
+    font-size: .82rem;
+    color: var(--text);
+    text-decoration: none;
+    background: rgba(255,255,255,.04);
+    border: 1px solid var(--border);
+    padding: .65rem 1.2rem;
+    border-radius: 4px;
+    transition: all .2s;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative; z-index: 1;
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: .75rem;
+    color: var(--muted);
+  }
+  footer span { color: var(--accent); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+  .fade-in.visible { opacity: 1; transform: none; }
+
+  /* ── TERMINAL BLOCK ── */
+  .terminal {
+    background: #080c17;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    font-family: var(--mono);
+    font-size: .82rem;
+    color: #c8d6f0;
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  .terminal-bar {
+    display: flex; align-items: center; gap: .4rem;
+    margin-bottom: 1rem;
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot.r { background: #ff5f57; }
+  .dot.y { background: #febc2e; }
+  .dot.g { background: #28c840; }
+  .t-prompt { color: var(--accent); }
+  .t-cmd    { color: #e8eaf6; }
+  .t-out    { color: var(--muted); margin-top: .3rem; }
+  .t-pass   { color: var(--green); }
+  .t-fail   { color: var(--red); }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    nav { padding: 1rem 1.2rem; }
+    .nav-links { gap: 1rem; }
+    section { padding: 4rem 1.2rem; }
+    .hero { padding: 7rem 1.2rem 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">qa<span>.</span>portfolio<span>()</span></div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="status-badge"><span class="status-dot"></span> Open to opportunities</div>
+    <div class="hero-tag">// QA Engineer Portfolio</div>
+    <h1>
+      Hi, I'm <span class="highlight">[Yash Prashant Polke]</span><br/>
+      <span class="dim">I break things</span> professionally.
+    </h1>
+    <p class="hero-sub">
+      Fresher QA Engineer with <strong>BCA (2023)</strong> + <strong>MCA (2025)</strong>.<br/>
+      Passionate about software quality, test automation, and bug hunting.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn btn-primary">View My Work</a>
+      <a href="#contact" class="btn btn-outline">Hire Me</a>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- TERMINAL SNIPPET -->
+<section style="padding-top:3rem; padding-bottom:1rem;">
+  <div class="terminal fade-in">
+    <div class="terminal-bar">
+      <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span style="margin-left:.5rem; color:var(--muted); font-size:.75rem;">selenium_login_tests.py</span>
+    </div>
+    <div><span class="t-prompt">$</span> <span class="t-cmd">python selenium_login_tests.py</span></div>
+    <div class="t-out">══════════════════════════════════════════════</div>
+    <div class="t-out">  SELENIUM TEST EXECUTION — SauceDemo Login</div>
+    <div class="t-out">══════════════════════════════════════════════</div>
+    <div class="t-pass">  ✅ PASS  |  TC_001  |  Valid Login</div>
+    <div class="t-pass">  ✅ PASS  |  TC_002  |  Invalid Password</div>
+    <div class="t-pass">  ✅ PASS  |  TC_003  |  Empty Username</div>
+    <div class="t-pass">  ✅ PASS  |  TC_004  |  Empty Password</div>
+    <div class="t-pass">  ✅ PASS  |  TC_005  |  Both Fields Empty</div>
+    <div class="t-pass">  ✅ PASS  |  TC_006  |  Locked Out User</div>
+    <div class="t-pass">  ✅ PASS  |  TC_007  |  Logout Functionality</div>
+    <div class="t-out">══════════════════════════════════════════════</div>
+    <div class="t-pass">  Total: 7  |  Passed: 7  |  Failed: 0</div>
+    <div class="t-out">══════════════════════════════════════════════</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label fade-in">// 01 — skills</div>
+  <h2 class="section-title fade-in">What I Work With</h2>
+  <p class="section-desc fade-in">Core QA skills built through hands-on practice and real project work.</p>
+
+  <div class="skills-grid">
+    <div class="skill-card fade-in">
+      <div class="skill-icon">🧪</div>
+      <div class="skill-name">Manual Testing</div>
+      <div class="skill-level">Test cases · Bug reports · STLC</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+    </div>
+    <div class="skill-card fade-in">
+      <div class="skill-icon">🤖</div>
+      <div class="skill-name">Selenium</div>
+      <div class="skill-level">Python · WebDriver · Automation</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:65%"></div></div>
+    </div>
+    <div class="skill-card fade-in">
+      <div class="skill-icon">📮</div>
+      <div class="skill-name">API Testing</div>
+      <div class="skill-level">Postman · REST APIs · JSON</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:70%"></div></div>
+    </div>
+    <div class="skill-card fade-in">
+      <div class="skill-icon">🗄️</div>
+      <div class="skill-name">SQL</div>
+      <div class="skill-level">Queries · DB validation</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:60%"></div></div>
+    </div>
+    <div class="skill-card fade-in">
+      <div class="skill-icon">🐛</div>
+      <div class="skill-name">JIRA</div>
+      <div class="skill-level">Bug tracking · Agile boards</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:55%"></div></div>
+    </div>
+    <div class="skill-card fade-in">
+      <div class="skill-icon">🐍</div>
+      <div class="skill-name">Python</div>
+      <div class="skill-level">Scripting · Test automation</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:60%"></div></div>
+    </div>
+    <div class="skill-card fade-in">
+      <div class="skill-icon">🔄</div>
+      <div class="skill-name">Agile / Scrum</div>
+      <div class="skill-level">Sprints · Stand-ups · Backlogs</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:65%"></div></div>
+    </div>
+    <div class="skill-card fade-in">
+      <div class="skill-icon">🐙</div>
+      <div class="skill-name">Git & GitHub</div>
+      <div class="skill-level">Version control · Portfolio</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:55%"></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label fade-in">// 02 — projects</div>
+  <h2 class="section-title fade-in">Portfolio Projects</h2>
+  <p class="section-desc fade-in">Real test cases, automation scripts, and bug reports on live applications.</p>
+
+  <div class="projects-grid">
+    <div class="project-card fade-in">
+      <div class="project-type">Manual Testing</div>
+      <div class="project-title">SauceDemo — Login Module</div>
+      <div class="project-desc">Wrote 10 detailed test cases covering positive, negative, boundary, and security scenarios. Found and documented 2 UI bugs.</div>
+      <div class="project-tags">
+        <span class="tag">Manual Testing</span>
+        <span class="tag">Test Cases</span>
+        <span class="tag">Bug Report</span>
+      </div>
+      <div class="project-links">
+        <a href="#" class="project-link">↗ GitHub</a>
+        <a href="#" class="project-link">📄 Test Cases</a>
+      </div>
+    </div>
+
+    <div class="project-card fade-in">
+      <div class="project-type">Test Automation</div>
+      <div class="project-title">Selenium Login Automation</div>
+      <div class="project-desc">Automated 7 login test cases using Selenium + Python on SauceDemo. Tests run end-to-end in Chrome with pass/fail reporting.</div>
+      <div class="project-tags">
+        <span class="tag">Selenium</span>
+        <span class="tag">Python</span>
+        <span class="tag">WebDriver</span>
+      </div>
+      <div class="project-links">
+        <a href="#" class="project-link">↗ GitHub</a>
+        <a href="#" class="project-link">▶ Run Script</a>
+      </div>
+    </div>
+
+    <div class="project-card fade-in">
+      <div class="project-type">API Testing</div>
+      <div class="project-title">REST API Testing — ReqRes</div>
+      <div class="project-desc">Tested public REST API endpoints using Postman — GET, POST, PUT, DELETE. Validated status codes, response bodies, and headers.</div>
+      <div class="project-tags">
+        <span class="tag">Postman</span>
+        <span class="tag">REST API</span>
+        <span class="tag">JSON</span>
+      </div>
+      <div class="project-links">
+        <a href="#" class="project-link">↗ GitHub</a>
+        <a href="#" class="project-link">📮 Collection</a>
+      </div>
+    </div>
+
+    <div class="project-card fade-in">
+      <div class="project-type">E-Commerce Testing</div>
+      <div class="project-title">OpenCart — Registration Module</div>
+      <div class="project-desc">Tested user registration flow with 15 test cases. Found 3 bugs including duplicate email not handled and weak password accepted.</div>
+      <div class="project-tags">
+        <span class="tag">Manual Testing</span>
+        <span class="tag">Boundary Testing</span>
+        <span class="tag">OpenCart</span>
+      </div>
+      <div class="project-links">
+        <a href="#" class="project-link">↗ GitHub</a>
+        <a href="#" class="project-link">🐛 Bug Report</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label fade-in">// 03 — about</div>
+  <h2 class="section-title fade-in">About Me</h2>
+
+  <div class="about-grid">
+    <div class="about-text fade-in">
+      <p>I'm a <strong>fresher QA Engineer</strong> with a strong academic background in computer applications. I'm passionate about ensuring software quality and finding bugs before users do.</p>
+      <p>My approach to testing is <strong>methodical and thorough</strong> — I believe every good application is built on a foundation of well-written test cases and clear bug documentation.</p>
+      <p>I'm currently building my skills in <strong>Selenium automation, API testing with Postman</strong>, and preparing for my ISTQB Foundation certification.</p>
+      <p>Looking for my <strong>first QA role</strong> where I can contribute, learn, and grow in a professional environment.</p>
+    </div>
+    <div class="fade-in">
+      <div class="edu-card">
+        <div class="edu-degree">Master of Computer Applications (MCA)</div>
+        <div class="edu-school">[Savitribai Phule Pune University]</div>
+        <div class="edu-year">2023 – 2025</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-degree">Bachelor of Computer Applications (BCA)</div>
+        <div class="edu-school">[Sant gadge Baba Amravti University]</div>
+        <div class="edu-year">2020 – 2023</div>
+      </div>
+      <div style="margin-top:1.5rem;">
+        <div style="font-family:var(--mono); font-size:.78rem; color:var(--muted); margin-bottom:.75rem; letter-spacing:.05em;">CERTIFICATIONS</div>
+        <div class="skill-card" style="margin-bottom:.6rem;">
+
+         <!-- <div class="skill-name">ISTQB Foundation Level</div> -->
+
+          <div class="skill-level" style="color:var(--yellow);">⏳ In Progress</div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-name">Selenium with Python</div>
+          <div class="skill-level" style="color:var(--green);">✅ Self-Certified</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label fade-in">// 04 — contact</div>
+  <h2 class="section-title fade-in">Let's Connect</h2>
+
+  <div class="contact-inner fade-in">
+    <h3>Open to QA Opportunities 🚀</h3>
+    <p>I'm actively looking for my first QA Engineer role. If you have an opening or want to connect, reach out!</p>
+    <div class="contact-links">
+      <a href="mailto:your@email.com" class="contact-link">✉️ yashpolke12@email.com</a>
+      <a href="https://www.linkedin.com/in/yash-polke" class="contact-link" target="_blank">💼 LinkedIn</a>
+      <a href="https://github.com/yashpolke12" class="contact-link" target="_blank">🐙 GitHub</a>
+      <a href="tel:+91XXXXXXXXXX" class="contact-link">📞 +91 7620408025</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  Built with 💙 by <span>[Yash]</span> · QA Engineer · India
+</footer>
+
+<script>
+  // Scroll animation
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 60);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Animate skill bars on scroll
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+          const w = bar.style.width;
+          bar.style.width = '0';
+          setTimeout(() => bar.style.width = w, 200);
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.skills-grid').forEach(el => barObserver.observe(el));
+
+  // Smooth nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) cur = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--accent)' : '';
+    });
+  });
+</script>
+</body>
+</html>
